@@ -2,7 +2,7 @@
 
 
 /**
- * Create linked list and set it's head and tail to NULL
+ * Create linked list and set it's head and tail to NULL and size to 0
  * Time Complexity: O(1)
  */
 list_t *create_list() {
@@ -105,7 +105,7 @@ node_t *insert_first(list_t *list, void *e) {
 
 /**
  * Insert e in front of the element at position p. Return the position
- * of the element. Note you cannot use this if the list is empty
+ * of the element. 
  * Time Complexity: O(1)
  */
 node_t *insert_before(list_t *list, node_t *p, void *e) {
@@ -130,8 +130,8 @@ node_t *insert_before(list_t *list, node_t *p, void *e) {
 }
 
 /**
- * Create new node with element e and set it as the tail of the list. Return
- * the position of the element
+ * Create new node with element e and set it as the tail of the list. 
+ * Return the position of the element
  * Time Complexity: O(1)
  */
 node_t *insert_last(list_t *list, void *e) {
@@ -153,7 +153,7 @@ node_t *insert_last(list_t *list, void *e) {
 
 /**
  * Insert e following the element at position p. Return the 
- * position of the element. Note you cannot use this if the list is empty
+ * position of the element. 
  * Time Complexity: O(1)
  */
 node_t *insert_after(list_t *list, node_t *p, void *e) {
@@ -211,6 +211,7 @@ void *remove_last(list_t *list) {
         return NULL;
     }
 
+    // There is only one element in the list
     if (list->head == list->tail) {
         return remove_first(list);
     }
@@ -222,10 +223,6 @@ void *remove_last(list_t *list) {
     list->tail->next = NULL;
     free(rem_node);
     list->size--;
-    if (list->size == 0) {
-        list->head = NULL;
-        list->tail = NULL;
-    }
     return rem_element;
 }
 
