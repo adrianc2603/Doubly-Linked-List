@@ -428,7 +428,6 @@ void test_all_functions_regular_cases() {
         printf("The node after node_h is not NULL, but it should be");
     }
 
-
     free(a);
     free(b);
     free(c);
