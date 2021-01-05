@@ -441,7 +441,7 @@ void test_all_functions_regular_cases() {
 
 int main() {
 
-    // test_all_functions_regular_cases();
+    test_all_functions_regular_cases();
 
     return 0;
 }
