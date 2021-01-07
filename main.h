@@ -20,6 +20,8 @@ int size(list_t *list);
 
 bool is_empty(list_t *list);
 
+node_t *get_node(list_t *list, void *e);
+
 node_t *first(list_t *list);
 
 node_t *last(list_t *list);
@@ -28,13 +30,13 @@ node_t *before(list_t *list, node_t *p);
 
 node_t *after(list_t *list, node_t *p);
 
-node_t *insert_first(list_t *list, void *e);
+void insert_first(list_t *list, void *e);
 
-node_t *insert_before(list_t *list, node_t *p, void *e);
+void insert_before(list_t *list, node_t *p, void *e);
 
-node_t *insert_last(list_t *list, void *e);
+void insert_last(list_t *list, void *e);
 
-node_t *insert_after(list_t *list, node_t *p, void *e);
+void insert_after(list_t *list, node_t *p, void *e);
 
 void *remove_first(list_t *list);
 

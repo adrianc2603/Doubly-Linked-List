@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 /**
  * Create linked list and set it's head and tail to NULL and size to 0
  * Time Complexity: O(1)
@@ -35,6 +34,30 @@ bool is_empty(list_t *list) {
         return true;
     }
     return (list->size == 0);
+}
+
+/**
+ * Find and return the node containing element e. Return NULL if it's not found
+ * Time Complexity: O(n)
+ */
+node_t *get_node(list_t *list, void *e) {
+    if (list == NULL) {
+        printf("List is NULL\n");
+        return NULL;
+    }
+
+    // Find and return the node with element e
+    node_t *current_node = list->head;
+    while (current_node != NULL) {
+        if (current_node->element == e) {
+            return current_node;
+        }
+        current_node = current_node->next;
+    }
+
+    // Not found
+    printf("The node was not found in the list\n");
+    return NULL;
 }
 
 /**
@@ -86,14 +109,13 @@ node_t *after(list_t *list, node_t *p) {
 }
 
 /**
- * Create new node with element e and set it as the head of the list. Return 
- * the position of the element
+ * Create new node with element e and set it as the head of the list. 
  * Time Complexity: O(1)
  */
-node_t *insert_first(list_t *list, void *e) {
+void insert_first(list_t *list, void *e) {
      if (list == NULL) {
         printf("List is NULL\n");
-        return NULL;
+        return;
     }
     node_t *new_node = malloc(sizeof(node_t));
     new_node->element = e;
@@ -107,18 +129,16 @@ node_t *insert_first(list_t *list, void *e) {
     if (list->size == 1) {
         list->tail = list->head;
     }
-    return new_node;
 }
 
 /**
- * Insert e in front of the element at position p. Return the position
- * of the element. 
+ * Insert e in front of the element at position p. 
  * Time Complexity: O(1)
  */
-node_t *insert_before(list_t *list, node_t *p, void *e) {
+void insert_before(list_t *list, node_t *p, void *e) {
     if (list == NULL || p == NULL) {
         printf("List is NULL\n");
-        return NULL;
+        return;
     }
 
     // Insert before the current head
@@ -134,21 +154,20 @@ node_t *insert_before(list_t *list, node_t *p, void *e) {
     p->prev->next = new_node;
     p->prev = new_node;
     list->size++;
-    return new_node;
 }
 
 /**
  * Create new node with element e and set it as the tail of the list. 
- * Return the position of the element
  * Time Complexity: O(1)
  */
-node_t *insert_last(list_t *list, void *e) {
+void insert_last(list_t *list, void *e) {
      if (list == NULL) {
         printf("List is NULL or p is NULL\n");
-        return NULL;
+        return;
     }
     if (list->size == 0) {
-        return insert_first(list, e);
+        insert_first(list, e);
+        return;
     }
     node_t *new_node = malloc(sizeof(node_t));
     new_node->element = e;
@@ -157,23 +176,22 @@ node_t *insert_last(list_t *list, void *e) {
     list->tail->next = new_node;
     list->tail = new_node;
     list->size++;
-    return new_node;
 }
 
 /**
- * Insert e following the element at position p. Return the 
- * position of the element. 
+ * Insert e following the element at position p. 
  * Time Complexity: O(1)
  */
-node_t *insert_after(list_t *list, node_t *p, void *e) {
+void insert_after(list_t *list, node_t *p, void *e) {
     if (list == NULL || p == NULL) {
         printf("List is NULL or p is NULL\n");
-        return NULL;
+        return;
     }
 
     // Insert after the current tail
     if (list->tail == p) {
-        return insert_last(list, e);
+        insert_last(list, e);
+        return;
     }
 
     // Create node, set its element to e, and add it after p
@@ -184,7 +202,6 @@ node_t *insert_after(list_t *list, node_t *p, void *e) {
     p->next->prev = new_node;
     p->next = new_node;
     list->size++;
-    return new_node;
 }
 
 /**
