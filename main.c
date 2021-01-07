@@ -18,7 +18,6 @@ list_t *create_list() {
  */ 
 int size(list_t *list) {
     if (list == NULL) {
-        printf("List is NULL\n");
         return 0;
     }
     return list->size;
@@ -30,7 +29,6 @@ int size(list_t *list) {
  */
 bool is_empty(list_t *list) {
     if (list == NULL) {
-        printf("List is NULL\n");
         return true;
     }
     return (list->size == 0);
@@ -42,7 +40,6 @@ bool is_empty(list_t *list) {
  */
 node_t *get_node(list_t *list, void *e) {
     if (list == NULL) {
-        printf("List is NULL\n");
         return NULL;
     }
 
@@ -56,7 +53,6 @@ node_t *get_node(list_t *list, void *e) {
     }
 
     // Not found
-    printf("The node was not found in the list\n");
     return NULL;
 }
 
@@ -66,7 +62,6 @@ node_t *get_node(list_t *list, void *e) {
  */ 
 node_t *first(list_t *list) {
     if (list == NULL) {
-        printf("List is NULL\n");
         return NULL;
     }
     return list->head;
@@ -78,7 +73,6 @@ node_t *first(list_t *list) {
  */ 
 node_t *last(list_t *list) {
     if (list == NULL) {
-        printf("List is NULL\n");
         return NULL;
     }
     return list->tail;
@@ -90,7 +84,6 @@ node_t *last(list_t *list) {
  */
 node_t *before(list_t *list, node_t *p) {
     if (list == NULL || p == NULL || p == list->head) {
-        printf("List is NULL\n");
         return NULL;
     }
     return p->prev;
@@ -102,7 +95,6 @@ node_t *before(list_t *list, node_t *p) {
  */
 node_t *after(list_t *list, node_t *p) {
     if (list == NULL || p == NULL || p == list->tail) {
-        printf("List is NULL or p is NULL or p = list->tail\n");
         return NULL;
     }
     return p->next;
@@ -114,7 +106,6 @@ node_t *after(list_t *list, node_t *p) {
  */
 void insert_first(list_t *list, void *e) {
      if (list == NULL) {
-        printf("List is NULL\n");
         return;
     }
     node_t *new_node = malloc(sizeof(node_t));
@@ -137,7 +128,6 @@ void insert_first(list_t *list, void *e) {
  */
 void insert_before(list_t *list, node_t *p, void *e) {
     if (list == NULL || p == NULL) {
-        printf("List is NULL\n");
         return;
     }
 
@@ -162,7 +152,6 @@ void insert_before(list_t *list, node_t *p, void *e) {
  */
 void insert_last(list_t *list, void *e) {
      if (list == NULL) {
-        printf("List is NULL or p is NULL\n");
         return;
     }
     if (list->size == 0) {
@@ -184,7 +173,6 @@ void insert_last(list_t *list, void *e) {
  */
 void insert_after(list_t *list, node_t *p, void *e) {
     if (list == NULL || p == NULL) {
-        printf("List is NULL or p is NULL\n");
         return;
     }
 
@@ -210,7 +198,6 @@ void insert_after(list_t *list, node_t *p, void *e) {
  */
 void *remove_first(list_t *list) {
     if (list == NULL || list->head == NULL) {
-        printf("List is NULL or list->head is NULL (list is empty)\n");
         return NULL;
     }
 
@@ -236,7 +223,6 @@ void *remove_first(list_t *list) {
  */
 void *remove_last(list_t *list) {
     if (list == NULL || list->tail == NULL) {
-        printf("List is NULL or list->tail is NULL (list is empty)\n");
         return NULL;
     }
 
@@ -261,7 +247,6 @@ void *remove_last(list_t *list) {
  */
 void *remove_node(list_t *list, node_t *p) {
     if (list == NULL || p == NULL || list->size == 0) {
-        printf("List is NULL or p is NULL or list is empty\n");
         return NULL;
     }
 
