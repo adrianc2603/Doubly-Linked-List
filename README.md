@@ -1,8 +1,8 @@
 # Doubly-Linked-List
 ## By Adrian Currington
 
-## Description
-This Doubly-Linked-List stores void* elements, allowing an item of any type to be stored, by storing a pointer to that item.
+### Description
+This doubly linked list stores void* elements, allowing an item of any type to be stored by storing a pointer to that item. Each node keeps a pointer to its element, the node previous to it and the node following it in the linked list.
 
 ### Files Includes
 - main.h: Header file for my linked list.
