@@ -108,6 +108,8 @@ void insert_first(list_t *list, void *e) {
      if (list == NULL) {
         return;
     }
+
+    // Create node, set its element to e, and add it as the head
     node_t *new_node = malloc(sizeof(node_t));
     new_node->element = e;
     if (list->head != NULL) {
@@ -158,6 +160,8 @@ void insert_last(list_t *list, void *e) {
         insert_first(list, e);
         return;
     }
+
+    // Create node, set its element to e, and add it as the tail
     node_t *new_node = malloc(sizeof(node_t));
     new_node->element = e;
     new_node->next = NULL;
@@ -210,6 +214,8 @@ void *remove_first(list_t *list) {
     }
     free(rem_node);
     list->size--;
+
+    // List is now empty
     if (list->size == 0) {
         list->head = NULL;
         list->tail = NULL;
@@ -258,16 +264,12 @@ void *remove_node(list_t *list, node_t *p) {
         return remove_last(list);
     }
 
-    // Remove current_node (p)
+    // Remove p
     void *rem_element = p->element;
     p->prev->next = p->next;
     p->next->prev = p->prev;
     free(p);
     list->size--;
-    if (list->size == 0) {
-        list->head = NULL;
-        list->tail = NULL;
-    }
     return rem_element;
 }
 
