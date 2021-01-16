@@ -1,0 +1,294 @@
+        -:    0:Source:main.c
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "main.h"
+        -:    2:
+        -:    3:/**
+        -:    4: * Create linked list and set it's head and tail to NULL and size to 0
+        -:    5: * Time Complexity: O(1)
+        -:    6: */
+        1:    7:list_t *create_list() {
+        1:    8:    list_t *list = malloc(sizeof(list_t));
+        1:    9:    list->head = NULL;
+        1:   10:    list->tail = NULL;
+        1:   11:    list->size = 0;
+        1:   12:    return list;
+        -:   13:}
+        -:   14:
+        -:   15:/**
+        -:   16: * Return the number of elements stored
+        -:   17: * Time Complexity: O(1)
+        -:   18: */ 
+       16:   19:int size(list_t *list) {
+       16:   20:    if (list == NULL) {
+    #####:   21:        return 0;
+        -:   22:    }
+       16:   23:    return list->size;
+        -:   24:}
+        -:   25:
+        -:   26:/**
+        -:   27: * Return whether or not the list is empty
+        -:   28: * Time Complexity: O(1)
+        -:   29: */
+       10:   30:bool is_empty(list_t *list) {
+       10:   31:    if (list == NULL) {
+    #####:   32:        return true;
+        -:   33:    }
+       10:   34:    return (list->size == 0);
+        -:   35:}
+        -:   36:
+        -:   37:/**
+        -:   38: * Find and return the node containing element e. Return NULL if it's not found
+        -:   39: * Time Complexity: O(n)
+        -:   40: */
+        8:   41:node_t *get_node(list_t *list, void *e) {
+        8:   42:    if (list == NULL) {
+    #####:   43:        return NULL;
+        -:   44:    }
+        -:   45:
+        -:   46:    // Find and return the node with element e
+        8:   47:    node_t *current_node = list->head;
+       28:   48:    while (current_node != NULL) {
+       20:   49:        if (current_node->element == e) {
+        8:   50:            return current_node;
+        -:   51:        }
+       12:   52:        current_node = current_node->next;
+        -:   53:    }
+        -:   54:
+        -:   55:    // Not found
+    #####:   56:    return NULL;
+        -:   57:}
+        -:   58:
+        -:   59:/**
+        -:   60: * Return the position of the first element (NULL if empty)
+        -:   61: * Time Complexity: O(1)
+        -:   62: */ 
+       16:   63:node_t *first(list_t *list) {
+       16:   64:    if (list == NULL) {
+    #####:   65:        return NULL;
+        -:   66:    }
+       16:   67:    return list->head;
+        -:   68:}
+        -:   69:
+        -:   70:/**
+        -:   71: * Return the position of the last element (NULL if empty)
+        -:   72: * Time Complexity: O(1)
+        -:   73: */ 
+       16:   74:node_t *last(list_t *list) {
+       16:   75:    if (list == NULL) {
+    #####:   76:        return NULL;
+        -:   77:    }
+       16:   78:    return list->tail;
+        -:   79:}
+        -:   80:
+        -:   81:/**
+        -:   82: * Return the position immediately before p (NULL if p is first)
+        -:   83: * Time Complexity: O(1)
+        -:   84: */
+       19:   85:node_t *before(list_t *list, node_t *p) {
+       19:   86:    if (list == NULL || p == NULL || p == list->head) {
+        8:   87:        return NULL;
+        -:   88:    }
+       11:   89:    return p->prev;
+        -:   90:}
+        -:   91:
+        -:   92:/**
+        -:   93: * Return the position immediately after p (NULL if p is last)
+        -:   94: * Time Complexity: O(1)
+        -:   95: */
+       19:   96:node_t *after(list_t *list, node_t *p) {
+       19:   97:    if (list == NULL || p == NULL || p == list->tail) {
+        8:   98:        return NULL;
+        -:   99:    }
+       11:  100:    return p->next;
+        -:  101:}
+        -:  102:
+        -:  103:/**
+        -:  104: * Create new node with element e and set it as the head of the list. 
+        -:  105: * Time Complexity: O(1)
+        -:  106: */
+        4:  107:void insert_first(list_t *list, void *e) {
+        4:  108:     if (list == NULL) {
+    #####:  109:        return;
+        -:  110:    }
+        -:  111:
+        -:  112:    // Create node, set its element to e, and add it as the head
+        4:  113:    node_t *new_node = malloc(sizeof(node_t));
+        4:  114:    new_node->element = e;
+        4:  115:    if (list->head != NULL) {
+        2:  116:        list->head->prev = new_node;
+        -:  117:    }
+        4:  118:    new_node->next = list->head;
+        4:  119:    new_node->prev = NULL;
+        4:  120:    list->head = new_node;
+        4:  121:    list->size++;
+        4:  122:    if (list->size == 1) {
+        2:  123:        list->tail = list->head;
+        -:  124:    }
+        -:  125:}
+        -:  126:
+        -:  127:/**
+        -:  128: * Insert e in front of the element at position p. 
+        -:  129: * Time Complexity: O(1)
+        -:  130: */
+        2:  131:void insert_before(list_t *list, node_t *p, void *e) {
+        2:  132:    if (list == NULL || p == NULL) {
+    #####:  133:        return;
+        -:  134:    }
+        -:  135:
+        -:  136:    // Insert before the current head
+        2:  137:    if (list->head == p) {
+        1:  138:        return insert_first(list, e);
+        -:  139:    }
+        -:  140:
+        -:  141:    // Create node, set its element to e, and add it before p
+        1:  142:    node_t *new_node = malloc(sizeof(node_t));
+        1:  143:    new_node->element = e;
+        1:  144:    new_node->next = p;
+        1:  145:    new_node->prev = p->prev;
+        1:  146:    p->prev->next = new_node;
+        1:  147:    p->prev = new_node;
+        1:  148:    list->size++;
+        -:  149:}
+        -:  150:
+        -:  151:/**
+        -:  152: * Create new node with element e and set it as the tail of the list. 
+        -:  153: * Time Complexity: O(1)
+        -:  154: */
+        3:  155:void insert_last(list_t *list, void *e) {
+        3:  156:     if (list == NULL) {
+    #####:  157:        return;
+        -:  158:    }
+        3:  159:    if (list->size == 0) {
+        1:  160:        insert_first(list, e);
+        1:  161:        return;
+        -:  162:    }
+        -:  163:
+        -:  164:    // Create node, set its element to e, and add it as the tail
+        2:  165:    node_t *new_node = malloc(sizeof(node_t));
+        2:  166:    new_node->element = e;
+        2:  167:    new_node->next = NULL;
+        2:  168:    new_node->prev = list->tail;
+        2:  169:    list->tail->next = new_node;
+        2:  170:    list->tail = new_node;
+        2:  171:    list->size++;
+        -:  172:}
+        -:  173:
+        -:  174:/**
+        -:  175: * Insert e following the element at position p. 
+        -:  176: * Time Complexity: O(1)
+        -:  177: */
+        2:  178:void insert_after(list_t *list, node_t *p, void *e) {
+        2:  179:    if (list == NULL || p == NULL) {
+    #####:  180:        return;
+        -:  181:    }
+        -:  182:
+        -:  183:    // Insert after the current tail
+        2:  184:    if (list->tail == p) {
+        1:  185:        insert_last(list, e);
+        1:  186:        return;
+        -:  187:    }
+        -:  188:
+        -:  189:    // Create node, set its element to e, and add it after p
+        1:  190:    node_t *new_node = malloc(sizeof(node_t));
+        1:  191:    new_node->element = e;
+        1:  192:    new_node->prev = p;
+        1:  193:    new_node->next = p->next;
+        1:  194:    p->next->prev = new_node;
+        1:  195:    p->next = new_node;
+        1:  196:    list->size++;
+        -:  197:}
+        -:  198:
+        -:  199:/**
+        -:  200: * Remove list->head and return its element. Return NULL if empty
+        -:  201: * Time Complexity: O(1)
+        -:  202: */
+        3:  203:void *remove_first(list_t *list) {
+        3:  204:    if (list == NULL || list->head == NULL) {
+    #####:  205:        return NULL;
+        -:  206:    }
+        -:  207:
+        -:  208:    // Remove the head
+        3:  209:    node_t *rem_node = list->head;
+        3:  210:    void *rem_element = rem_node->element;
+        3:  211:    list->head = list->head->next;
+        3:  212:    if (list->head != NULL) {
+        2:  213:        list->head->prev = NULL;
+        -:  214:    }
+        3:  215:    free(rem_node);
+        3:  216:    list->size--;
+        -:  217:
+        -:  218:    // List is now empty
+        3:  219:    if (list->size == 0) {
+        1:  220:        list->head = NULL;
+        1:  221:        list->tail = NULL;
+        -:  222:    }
+        3:  223:    return rem_element;
+        -:  224:}
+        -:  225:
+        -:  226:/**
+        -:  227: * Remove list->tail and return its element. Return NULL if empty
+        -:  228: * Time Complexity: O(1)
+        -:  229: */
+        4:  230:void *remove_last(list_t *list) {
+        4:  231:    if (list == NULL || list->tail == NULL) {
+    #####:  232:        return NULL;
+        -:  233:    }
+        -:  234:
+        -:  235:    // There is only one element in the list
+        4:  236:    if (list->head == list->tail) {
+        1:  237:        return remove_first(list);
+        -:  238:    }
+        -:  239:
+        -:  240:    // Remove the tail
+        3:  241:    node_t *rem_node = list->tail;
+        3:  242:    void *rem_element = rem_node->element;
+        3:  243:    list->tail = list->tail->prev;
+        3:  244:    list->tail->next = NULL;
+        3:  245:    free(rem_node);
+        3:  246:    list->size--;
+        3:  247:    return rem_element;
+        -:  248:}
+        -:  249:
+        -:  250:/**
+        -:  251: * Remove and return the element at position p
+        -:  252: * Time Complexity: O(1)
+        -:  253: */
+        4:  254:void *remove_node(list_t *list, node_t *p) {
+        4:  255:    if (list == NULL || p == NULL || list->size == 0) {
+    #####:  256:        return NULL;
+        -:  257:    }
+        -:  258:
+        4:  259:    if (list->head == p) {
+        1:  260:        return remove_first(list);
+        -:  261:    }
+        -:  262:
+        3:  263:    if (list->tail == p) {
+        2:  264:        return remove_last(list);
+        -:  265:    }
+        -:  266:
+        -:  267:    // Remove p
+        1:  268:    void *rem_element = p->element;
+        1:  269:    p->prev->next = p->next;
+        1:  270:    p->next->prev = p->prev;
+        1:  271:    free(p);
+        1:  272:    list->size--;
+        1:  273:    return rem_element;
+        -:  274:}
+        -:  275:
+        -:  276:/**
+        -:  277: * Free all memory associated with the list
+        -:  278: * Time Complexity: O(n)
+        -:  279: */
+        1:  280:void destroy_list(list_t *list) {
+        1:  281:    node_t *next_node = NULL;
+        1:  282:    node_t *current_node = list->head;
+        3:  283:    while (current_node != NULL) {
+        1:  284:        next_node = current_node->next;
+        1:  285:        free(current_node);
+        1:  286:        current_node = next_node;
+        -:  287:    }
+        1:  288:    free(list);
+        1:  289:}
