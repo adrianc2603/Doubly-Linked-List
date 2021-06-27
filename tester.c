@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "main.h"
 
 /**
@@ -25,8 +26,7 @@ void print_list(list_t *list) {
 }
 
 /**
- * Helper function to create a heap-allocated integer and 
- * return a pointer to it
+ * Helper function to create a heap allocated int and return a pointer to it
  */
 int *create_element(int e) {
     int *p = malloc(sizeof(int));
@@ -37,376 +37,163 @@ int *create_element(int e) {
 void test_all_functions_regular_cases() {
     list_t *list = create_list();
 
-    printf("Size of list is %d\n", size(list)); // Size of list is 0
-    printf("Is this list empty? %d\n", is_empty(list)); // Is this list empty? 1 (True)
-    printf("The head of the list is %p\n", first(list)); // The head of the list is 0x0 (NULL)
-    printf("The tail of the list is %p\n", last(list)); // The tail of the list is 0x0 (NULL)
+    assert(size(list) == 0);
+    assert(is_empty(list) == true);
+    assert(first(list) == NULL);
+    assert(last(list) == NULL);
 
     // Insert 4
     int *a = create_element(4);
     insert_first(list, a);
     print_list(list); // 4 - 
-    node_t *node_a = get_node(list, a); 
-    printf("Size of list is %d\n", size(list)); // Size of list is 1
-    printf("Is this list empty? %d\n", is_empty(list)); // Is this list empty? 0 (False)
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 4
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 4
-    if (before(list, node_a) == NULL) {
-        printf("The node before node_a is NULL because node_a is the head\n"); // This should print
-    }
-    else {
-        printf("The node before node_a is not NULL, but it should be");
-    }
-    if (after(list, node_a) == NULL) {
-        printf("The node after node_a is NULL because node_a is the tail\n"); // This should print
-    }
-    else {
-        printf("The node after node_a is not NULL, but it should be");
-    }
+    node_t *node_a = get_node(list, a);
 
     // Insert 6
     int *b = create_element(6);
     insert_first(list, b);
-    print_list(list); // 6 - 4 -
-    node_t *node_b = get_node(list, b); 
-    printf("Size of list is %d\n", size(list)); // Size of list is 2
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 6
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 4
-    if (before(list, node_b) == NULL) {
-        printf("The node before node_b is NULL because node_b is the head\n"); // This should print
-    }
-    else {
-        printf("The node before node_a is not NULL, but it should be");
-    }
-    if (after(list, node_a) == NULL) {
-        printf("The node after node_a is NULL because node_a is the tail\n"); // This should print
-    }
-    else {
-        printf("The node after node_a is not NULL, but it should be");
-    } 
-    if (before(list, node_a) == node_b) {
-        printf("The node before node_a is node_b\n"); // This should print
-    }
-    else {
-        printf("The node before node_a is not node_b, but it should be");
-    }
-    if (after(list, node_b) == node_a) {
-        printf("The node after node_b is node_a\n"); // This should print
-    }
-    else {
-        printf("The node after node_b is not node_a, but it should be");
-    } 
+    print_list(list); // 6 - 4 - 
+    node_t *node_b = get_node(list, b);
 
     // Insert 3
     int *c = create_element(3);
     insert_last(list, c);
     print_list(list); // 6 - 4 - 3 - 
-    node_t *node_c = get_node(list, c); 
-    printf("Size of list is %d\n", size(list)); // Size of list is 3
-    printf("Is this list empty? %d\n", is_empty(list)); // Is this list empty? 0 (False)
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 6
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 3
-    if (before(list, node_c) == node_a) {
-        printf("The node before node_c is node_a\n"); // This should print
-    }
-    else {
-        printf("The node before node_c is not node_a, but it should be");
-    }
-    if (after(list, node_b) == node_a) {
-        printf("The node after node_b is node_a\n"); // This should print
-    }
-    else {
-        printf("The node after node_b is not node_a, but it should be");
-    }
+    node_t *node_c = get_node(list, c);
+
+    assert(size(list) == 3);
+    assert(is_empty(list) == false);
+    assert(*((int*) first(list)->element) == 6);
+    assert(*((int*) last(list)->element) == 3);
+    assert(before(list, node_c) == node_a);
+    assert(after(list, node_b) == node_a);
 
     // Insert 7
     int *d = create_element(7);
     insert_after(list, node_a, d);
     print_list(list); // 6 - 4 - 7 - 3 - 
-    node_t *node_d = get_node(list, d); 
-    printf("Size of list is %d\n", size(list)); // Size of list is 4
-    printf("Is this list empty? %d\n", is_empty(list)); // Is this list empty? 0 (False)
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 6
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 3
-    if (before(list, node_d) == node_a) {
-        printf("The node before node_d is node_a\n"); // This should print
-    }
-    else {
-        printf("The node before node_d is not node_a, but it should be");
-    }
-    if (after(list, node_a) == node_d) {
-        printf("The node after node_a is node_d\n"); // This should print
-    }
-    else {
-        printf("The node after node_a is not node_d, but it should be");
-    }
-    if (before(list, node_c) == node_d) {
-        printf("The node before node_c is node_d\n"); // This should print
-    }
-    else {
-        printf("The node before node_c is not node_d, but it should be");
-    }
-    if (after(list, node_d) == node_c) {
-        printf("The node after node_d is node_c\n"); // This should print
-    }
-    else {
-        printf("The node after node_d is not node_c, but it should be");
-    }
+    node_t *node_d = get_node(list, d);
 
     // Insert 11
     int *e = create_element(11);
     insert_before(list, node_d, e);
     print_list(list); // 6 - 4 - 11 - 7 - 3 - 
-    node_t *node_e = get_node(list, e); 
-    printf("Size of list is %d\n", size(list)); // Size of list is 5
-    printf("Is this list empty? %d\n", is_empty(list)); // Is this list empty? 0 (False)
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 6
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 3
-    if (before(list, node_e) == node_a) {
-        printf("The node before node_e is node_a\n"); // This should print
-    }
-    else {
-        printf("The node before node_e is not node_a, but it should be");
-    }
-    if (after(list, node_a) == node_e) {
-        printf("The node after node_a is node_e\n"); // This should print
-    }
-    else {
-        printf("The node after node_a is not node_e, but it should be");
-    }
-    if (before(list, node_d) == node_e) {
-        printf("The node before node_d is node_e\n"); // This should print
-    }
-    else {
-        printf("The node before node_d is not node_e, but it should be");
-    }
-    if (after(list, node_e) == node_d) {
-        printf("The node after node_e is node_d\n"); // This should print
-    }
-    else {
-        printf("The node after node_e is not node_d, but it should be");
-    }
+    node_t *node_e = get_node(list, e);
 
     // Insert 2
     int *f = create_element(2);
     insert_before(list, list->head, f);
     print_list(list); // 2 - 6 - 4 - 11 - 7 - 3 - 
-    node_t *node_f = get_node(list, f); 
-    printf("Size of list is %d\n", size(list)); // Size of list is 6
-    printf("Is this list empty? %d\n", is_empty(list)); // Is this list empty? 0 (False)
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 2
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 3
-    if (before(list, node_b) == node_f) {
-        printf("The node before node_b is node_f\n"); // This should print
-    }
-    else {
-        printf("The node before node_b is not node_f, but it should be");
-    }
-    if (after(list, node_f) == node_b) {
-        printf("The node after node_f is node_b\n"); // This should print
-    }
-    else {
-        printf("The node after node_f is not node_b, but it should be");
-    }
-    if (before(list, node_f) == NULL) {
-        printf("The node before node_f is NULL as node_f is the head\n"); // This should print
-    }
-    else {
-        printf("The node before node_f is not NULL, but it should be");
-    }
+    node_t *node_f = get_node(list, f);
 
     // Insert 5
-    int *g = create_element(5);;
+    int *g = create_element(5);
     insert_after(list, list->tail, g);
     print_list(list); // 2 - 6 - 4 - 11 - 7 - 3 - 5 -
-    node_t *node_g = get_node(list, g); 
-    if (before(list, node_g) == node_c) {
-        printf("The node before node_g is node_c\n"); // This should print
-    }
-    else {
-        printf("The node before node_g is not node_c, but it should be");
-    }
-    if (after(list, node_c) == node_g) {
-        printf("The node after node_c is node_g\n"); // This should print
-    }
-    else {
-        printf("The node after node_c is not node_g, but it should be");
-    }
-    printf("Size of list is %d\n", size(list)); // Size of list is 7
-    printf("Is this list empty? %d\n", is_empty(list)); // Is this list empty? 0 (False)
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 2
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 5
-    if (before(list, node_f) == NULL) {
-        printf("The node before node_f is NULL because node_f is the head\n"); // This should print
-    }
-    else {
-        printf("The node before node_f is not NULL, but it should be");
-    }
-    if (after(list, node_g) == NULL) {
-        printf("The node after node_g is NULL because node_g is the tail\n"); // This should print
-    }
-    else {
-        printf("The node after node_g is not NULL, but it should be");
-    }
+    node_t *node_g = get_node(list, g);
 
-    // Remove the first element (2)
+    assert(before(list, node_e) == node_a);
+    assert(after(list, node_c) == node_g);
+    assert(size(list) == 7);
+    assert(is_empty(list) == false);
+    assert(*((int*) first(list)->element) == 2);
+    assert(*((int*) last(list)->element) == 5);
+    assert(before(list, node_f) == NULL);
+    assert(after(list, node_g) == NULL);
+
+    // Remove first in list
     int *rem = remove_first(list);
-    printf("Removed number is %d\n", *rem); // Removed number is 2
+    assert(*rem == 2);
     print_list(list); // 6 - 4 - 11 - 7 - 3 - 5 -
-    printf("Size of list is %d\n", size(list)); // Size of list is 6
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 6
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 5
-    if (before(list, node_b) == NULL) {
-        printf("The node before node_b is NULL because node_b is the head\n"); // This should print
-    }
-    else {
-        printf("The node before node_b is not NULL, but it should be");
-    }
-    if (after(list, node_b) == node_a) {
-        printf("The node after node_b is node_a\n"); // This should print
-    }
-    else {
-        printf("The node after node_g is not node_a but it should be");
-    }
 
-    // Remove the last element (5)
+    assert(size(list) == 6);
+    assert(is_empty(list) == false);
+    assert(*((int*) first(list)->element) == 6);
+    assert(*((int*) last(list)->element) == 5);
+    assert(before(list, node_b) == NULL);
+    assert(after(list, node_b) == node_a);
+
+    // Remove last from list
     rem = remove_last(list);
-    printf("Removed number is %d\n", *rem); // Removed number is 5
+    assert(*rem == 5);
     print_list(list); // 6 - 4 - 11 - 7 - 3 -
-    printf("Size of list is %d\n", size(list)); // Size of list is 5
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 6
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 3
-    if (before(list, node_c) == node_d) {
-        printf("The node before node_c is node_d \n"); // This should print
-    }
-    else {
-        printf("The node before node_c is not node_d, but it should be");
-    }
 
-    if (after(list, node_c) == NULL) {
-        printf("The node after node_c is NULL because node_c is the tail\n"); // This should print
-    }
-    else {
-        printf("The node after node_c is not NULL, but it should be");
-    }
+    assert(size(list) == 5);
+    assert(is_empty(list) == false);
+    assert(*((int*) first(list)->element) == 6);
+    assert(*((int*) last(list)->element) == 3);
+    assert(before(list, node_c) == node_d);
+    assert(after(list, node_c) == NULL);
 
-    // Remove 11
+    // Remove 11 
     rem = remove_node(list, node_e);
-    printf("Removed number is %d\n", *rem); // Removed number is 11
+    assert(*rem == 11);
     print_list(list); // 6 - 4 - 7 - 3 -
-    printf("Size of list is %d\n", size(list)); // Size of list is 4
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 6
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 3
-    if (before(list, node_d) == node_a) {
-        printf("The node before node_d is node_a\n"); // This should print
-    }
-    else {
-        printf("The node before node_d is not node_a, but it should be");
-    }
-    if (after(list, node_a) == node_d) {
-        printf("The node after node_a is node_d\n"); // This should print
-    }
-    else {
-        printf("The node after node_a is not node_d, but it should be");
-    }
 
-    // Remove the tail (3)
+    assert(size(list) == 4);
+    assert(is_empty(list) == false);
+    assert(*((int*) first(list)->element) == 6);
+    assert(*((int*) last(list)->element) == 3);
+    assert(before(list, node_d) == node_a);
+    assert(after(list, node_a) == node_d);
+
+    // Remove tail
     rem = remove_node(list, list->tail);
-    printf("Removed number is %d\n", *rem); // Removed number is 3
+    assert(*rem == 3);
     print_list(list); // 6 - 4 - 7 -
-    printf("Size of list is %d\n", size(list)); // Size of list is 3
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 6
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 7
-    if (before(list, node_d) == node_a) {
-        printf("The node before node_d is node_a \n"); // This should print
-    }
-    else {
-        printf("The node before node_d is not node_a, but it should be");
-    }
-    if (after(list, node_d) == NULL) {
-        printf("The node after node_d is NULL because node_d is the tail\n"); // This should print
-    }
-    else {
-        printf("The node after node_d is not NULL, but it should be");
-    }
 
-    // Remove the head (6)
+    assert(size(list) == 3);
+    assert(is_empty(list) == false);
+    assert(*((int*) first(list)->element) == 6);
+    assert(*((int*) last(list)->element) == 7);
+    assert(before(list, node_d) == node_a);
+    assert(after(list, node_d) == NULL);
+
+    // Remove head
     rem = remove_node(list, list->head);
-    printf("Removed number is %d\n", *rem); // Removed number is 6
+    assert(*rem == 6);
     print_list(list); // 4 - 7 -
-    printf("Size of list is %d\n", size(list)); // Size of list is 2
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 4
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 7
-    if (before(list, node_a) == NULL) {
-        printf("The node before node_a is NULL because node_a is the head\n"); // This should print
-    }
-    else {
-        printf("The node before node_a is not NULL, but it should be");
-    }
-    if (after(list, node_a) == node_d) {
-        printf("The node after node_a is node_d\n"); // This should print
-    }
-    else {
-        printf("The node after node_a is not node_d but it should be");
-    }
-    if (after(list, node_d) == NULL) {
-        printf("The node after node_d is NULL because node_d is the tail\n"); // This should print
-    }
-    else {
-        printf("The node after node_d is not NULL, but it should be");
-    }
+
+    assert(size(list) == 2);
+    assert(is_empty(list) == false);
+    assert(*((int*) first(list)->element) == 4);
+    assert(*((int*) last(list)->element) == 7);
+    assert(before(list, node_a) == NULL);
+    assert(after(list, node_a) == node_d);
 
     // Remove 7
     rem = remove_node(list, node_d);
-    printf("Removed number is %d\n", *rem); // Removed number is 7
+    assert(*rem == 7);
     print_list(list); // 4 -
-    printf("Size of list is %d\n", size(list)); // Size of list is 1
-    printf("Is this list empty? %d\n", is_empty(list)); // Is this list empty? 0 (False)
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 4
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 4
-    if (before(list, node_a) == NULL) {
-        printf("The node before node_a is NULL because node_a is the head\n"); // This should print
-    }
-    else {
-        printf("The node before node_a is not NULL, but it should be");
-    }
-    if (after(list, node_a) == NULL) {
-        printf("The node after node_a is NULL because node_a is the tail\n"); // This should print
-    }
-    else {
-        printf("The node after node_a is not NULL, but it should be");
-    }
 
-    // Remove the last element (4)
+    assert(size(list) == 1);
+    assert(is_empty(list) == false);
+    assert(*((int*) first(list)->element) == 4);
+    assert(*((int*) last(list)->element) == 4);
+    assert(before(list, node_a) == NULL);
+    assert(after(list, node_a) == NULL);
+
+    // Remove last item in list
     rem = remove_last(list);
-    printf("Removed number is %d\n", *rem); // Removed number is 4
+    assert(*rem == 4);
     print_list(list); // Prints nothing
-    printf("Size of list is %d\n", size(list)); // Size of list is 0
-    printf("Is this list empty? %d\n", is_empty(list)); // Is this list empty? 1 (True)
-    printf("The head of the list is %p\n", first(list)); // The head of the list is 0x0 (NULL)
-    printf("The tail of the list is %p\n", last(list)); // The tail of the list is 0x0 (NULL)
 
-    // Insert 25
+    assert(size(list) == 0);
+    assert(is_empty(list) == true);
+    assert(first(list) == NULL);
+    assert(last(list) == NULL);
+
+    // Add 25 to list
     int *h = create_element(25);
     insert_last(list, h);
-    node_t *node_h = get_node(list, h); 
+    node_t *node_h = get_node(list, h);
     print_list(list); // 25 -
-    printf("Size of list is %d\n", size(list)); // Size of list is 1
-    printf("Is this list empty? %d\n", is_empty(list)); // Is this list empty? 0 (False)
-    printf("The head of the list is %d\n", *((int*) first(list)->element)); // The head of the list is 25
-    printf("The tail of the list is %d\n", *((int*) last(list)->element)); // The tail of the list is 25
-    if (before(list, node_h) == NULL) {
-        printf("The node before node_h is NULL because node_h is the head\n"); // This should print
-    }
-    else {
-        printf("The node before node_h is not NULL, but it should be");
-    }
-    if (after(list, node_h) == NULL) {
-        printf("The node after node_h is NULL because node_h is the tail\n"); // This should print
-    }
-    else {
-        printf("The node after node_h is not NULL, but it should be");
-    }
+
+    assert(size(list) == 1);
+    assert(is_empty(list) == false);
+    assert(*((int*) first(list)->element) == 25);
+    assert(*((int*) last(list)->element) == 25);
+    assert(before(list, node_h) == NULL);
+    assert(after(list, node_h) == NULL);    
 
     free(a);
     free(b);
