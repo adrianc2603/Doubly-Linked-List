@@ -21,22 +21,22 @@
         -:   16: * Return the number of elements stored
         -:   17: * Time Complexity: O(1)
         -:   18: */ 
-       16:   19:int size(list_t *list) {
-       16:   20:    if (list == NULL) {
+       11:   19:int size(list_t *list) {
+       11:   20:    if (list == NULL) {
     #####:   21:        return 0;
         -:   22:    }
-       16:   23:    return list->size;
+       11:   23:    return list->size;
         -:   24:}
         -:   25:
         -:   26:/**
         -:   27: * Return whether or not the list is empty
         -:   28: * Time Complexity: O(1)
         -:   29: */
-       10:   30:bool is_empty(list_t *list) {
-       10:   31:    if (list == NULL) {
+       11:   30:bool is_empty(list_t *list) {
+       11:   31:    if (list == NULL) {
     #####:   32:        return true;
         -:   33:    }
-       10:   34:    return (list->size == 0);
+       11:   34:    return (list->size == 0);
         -:   35:}
         -:   36:
         -:   37:/**
@@ -65,44 +65,44 @@
         -:   60: * Return the position of the first element (NULL if empty)
         -:   61: * Time Complexity: O(1)
         -:   62: */ 
-       16:   63:node_t *first(list_t *list) {
-       16:   64:    if (list == NULL) {
+       11:   63:node_t *first(list_t *list) {
+       11:   64:    if (list == NULL) {
     #####:   65:        return NULL;
         -:   66:    }
-       16:   67:    return list->head;
+       11:   67:    return list->head;
         -:   68:}
         -:   69:
         -:   70:/**
         -:   71: * Return the position of the last element (NULL if empty)
         -:   72: * Time Complexity: O(1)
         -:   73: */ 
-       16:   74:node_t *last(list_t *list) {
-       16:   75:    if (list == NULL) {
+       11:   74:node_t *last(list_t *list) {
+       11:   75:    if (list == NULL) {
     #####:   76:        return NULL;
         -:   77:    }
-       16:   78:    return list->tail;
+       11:   78:    return list->tail;
         -:   79:}
         -:   80:
         -:   81:/**
         -:   82: * Return the position immediately before p (NULL if p is first)
         -:   83: * Time Complexity: O(1)
         -:   84: */
-       19:   85:node_t *before(list_t *list, node_t *p) {
-       19:   86:    if (list == NULL || p == NULL || p == list->head) {
-        8:   87:        return NULL;
+       10:   85:node_t *before(list_t *list, node_t *p) {
+       10:   86:    if (list == NULL || p == NULL || p == list->head) {
+        5:   87:        return NULL;
         -:   88:    }
-       11:   89:    return p->prev;
+        5:   89:    return p->prev;
         -:   90:}
         -:   91:
         -:   92:/**
         -:   93: * Return the position immediately after p (NULL if p is last)
         -:   94: * Time Complexity: O(1)
         -:   95: */
-       19:   96:node_t *after(list_t *list, node_t *p) {
-       19:   97:    if (list == NULL || p == NULL || p == list->tail) {
-        8:   98:        return NULL;
+       10:   96:node_t *after(list_t *list, node_t *p) {
+       10:   97:    if (list == NULL || p == NULL || p == list->tail) {
+        5:   98:        return NULL;
         -:   99:    }
-       11:  100:    return p->next;
+        5:  100:    return p->next;
         -:  101:}
         -:  102:
         -:  103:/**
